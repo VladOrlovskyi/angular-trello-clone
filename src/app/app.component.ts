@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 
 export interface InfoList {
-  titleList: string;
-  idList: number;
-  cardsList: InfoCard[];
+  title: string;
+  id: number;
+  cards: InfoCard[];
 }
 
 export interface InfoCard {
-  idCard: number;
-  titleCard: string;
+  id: number;
+  title: string;
 }
 
 @Component({
@@ -17,118 +17,117 @@ export interface InfoCard {
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  titleList?: string;
-  titleCard?: string;
-
   ngOnInit(): void {}
 
   lists: InfoList[] = [
     {
-      titleList: 'TODO',
-      idList: 1,
-      cardsList: [
+      title: 'TODO',
+      id: 1,
+      cards: [
         {
-          idCard: 1,
-          titleCard: 'Text 1',
+          id: 1,
+          title: 'Text 1',
         },
         {
-          idCard: 7,
-          titleCard: 'Text 7',
+          id: 7,
+          title: 'Text 7',
         },
         {
-          idCard: 8,
-          titleCard: 'Text 8',
-        },
-      ],
-    },
-    {
-      titleList: 'ACTIVE',
-      idList: 2,
-      cardsList: [
-        {
-          idCard: 2,
-          titleCard: 'Text 2',
-        },
-        {
-          idCard: 6,
-          titleCard: 'Text 6',
-        },
-        {
-          idCard: 9,
-          titleCard: 'Text 9',
+          id: 8,
+          title: 'Text 8',
         },
       ],
     },
     {
-      titleList: 'DONE',
-      idList: 3,
-      cardsList: [
+      title: 'ACTIVE',
+      id: 2,
+      cards: [
         {
-          idCard: 3,
-          titleCard: 'Text 3',
+          id: 2,
+          title: 'Text 2',
         },
         {
-          idCard: 4,
-          titleCard: 'Text 4',
+          id: 6,
+          title: 'Text 6',
         },
         {
-          idCard: 5,
-          titleCard: 'Text 5',
+          id: 9,
+          title: 'Text 9',
+        },
+      ],
+    },
+    {
+      title: 'DONE',
+      id: 3,
+      cards: [
+        {
+          id: 3,
+          title: 'Text 3',
+        },
+        {
+          id: 4,
+          title: 'Text 4',
+        },
+        {
+          id: 5,
+          title: 'Text 5',
         },
       ],
     },
   ];
 
-  addNewList() {
-    if (this.titleList?.trim()) {
-      const newTitleList: InfoList = {
-        titleList: this.titleList,
-        idList: this.lists[this.lists.length - 1].idList + 1,
-        cardsList: [],
+  addList(title: string) {
+    if (title.trim()) {
+      const newListId =
+        Math.max.apply(
+          null,
+          this.lists.map((list) => list.id)
+        ) + 1;
+      const newList: InfoList = {
+        title,
+        id: newListId,
+        cards: [],
       };
-      this.lists.push(newTitleList);
-      console.log('New Title List', newTitleList);
-      this.titleList = '';
+      this.lists.push(newList);
+      console.log('New Title List', newList);
     }
     console.log('arr lists', this.lists);
   }
 
-  deleteNewList(list: InfoList) {
-    this.lists = this.lists.filter((i) => i.idList !== list.idList);
-    // console.log('TARGET:', this);
-    // console.log('TARGET LISTS:', this.lists);
-    // console.log('TARGET LIST GET:', list);
-    // console.log('TARGET LIST GET ID:', list.idList);
+  deleteList(currentList: InfoList) {
+    this.lists = this.lists.filter((list) => list.id !== currentList.id);
   }
 
-  addNewCard() {
-    if (this.titleCard?.trim()) {
-      let getLastCardId: any = this.lists.map(
-        (i) => i.cardsList[i.cardsList.length - 1].idCard
+  addCard(list: InfoList, title: string) {
+    if (title.trim()) {
+      const currentListId = list.id;
+      const getAllCardsId: number[] = this.lists.reduce(
+        (acc: number[], list: InfoList) => [
+          ...acc,
+          ...list.cards.map((card) => card.id),
+        ],
+        []
       );
+      const newCardId = Math.max.apply(null, getAllCardsId) + 1;
+
       const newCard: InfoCard = {
-        idCard: Math.max.apply(null, getLastCardId) + 1,
-        titleCard: this.titleCard,
+        id: newCardId,
+        title,
       };
       this.lists.map((list) => ({
         ...list,
-        cardsList: list.cardsList.push(newCard),
+        cards:
+          currentListId === list.id ? list.cards.push(newCard) : list.cards,
       }));
-      this.titleCard = '';
-      console.log('New Card', newCard);
+      console.log('newCard', newCard);
+      console.log('lists', this.lists);
     }
-    console.log('arr lists', this.lists);
   }
 
-  deleteNewCard(listCard: InfoCard) {
+  deleteCard(listCard: InfoCard) {
     this.lists = this.lists.map((list) => ({
       ...list,
-      cardsList: list.cardsList.filter(
-        (card) => card.idCard !== listCard.idCard
-      ),
+      cards: list.cards.filter((card) => card.id !== listCard.id),
     }));
-    // console.log('LISTS', this.lists);
-    // console.log('TARGET CARD GET:', listCard);
-    // console.log('TARGET CARD GET ID:', listCard.idCard);
   }
 }

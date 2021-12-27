@@ -5,19 +5,19 @@
 </header>
 <section class="section-list">
   <div class="section-list-card" *ngFor="let list of lists">
-    {{list.titleList}}
-    <div class="section-list-card-item" *ngFor="let listCard of list.cardsList">
-      {{listCard.titleCard}}
-      <button (click)="deleteNewCard(listCard)">Delete Card</button>
+    {{list.title}}
+    <div class="section-list-card-item" *ngFor="let listCard of list.cards">
+      {{listCard.title}}
+      <button (click)="deleteCard(listCard)">Delete Card</button>
     </div>
     <form action="submit" class="section-form-card">
-      <input type="text" class="section-form-input-card" [(ngModel)]="titleCard" name="nameTitleCard">
-      <button (click)="addNewCard()">Add Card</button>
+      <input #cardTitle type="text" class="section-form-input-card" name="nameTitleCard">
+      <button (click)="addCard(list, cardTitle.value)">Add Card</button>
     </form>
-    <button (click)="deleteNewList(list)">Delete List</button>
+    <button (click)="deleteList(list)">Delete List</button>
   </div>
   <form action="submit" class="section-form">
-    <input type="text" class="section-form-input" [(ngModel)]="titleList" name="nameTitleList">
-    <button (click)="addNewList()">Add List</button>
+    <input #listTitle type="text" class="section-form-input" name="nameTitleList">
+    <button (click)="addList(listTitle.value)">Add List</button>
   </form>
 </section>
