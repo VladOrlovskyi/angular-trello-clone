@@ -1,4 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {
+  CdkDragDrop,
+  moveItemInArray,
+  transferArrayItem,
+} from '@angular/cdk/drag-drop';
 
 export interface InfoList {
   title: string;
@@ -17,6 +22,8 @@ export interface InfoCard {
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
+  // @ViewChild('cardTitle') input;
+
   ngOnInit(): void {}
 
   lists: InfoList[] = [
@@ -108,6 +115,8 @@ export class AppComponent implements OnInit {
         ],
         []
       );
+      console.log('getAllCardsId', getAllCardsId);
+
       const newCardId = Math.max.apply(null, getAllCardsId) + 1;
 
       const newCard: InfoCard = {
@@ -122,6 +131,8 @@ export class AppComponent implements OnInit {
       console.log('newCard', newCard);
       console.log('lists', this.lists);
     }
+    console.log('title before', title);
+    console.log('title after', title);
   }
 
   deleteCard(listCard: InfoCard) {
@@ -130,4 +141,37 @@ export class AppComponent implements OnInit {
       cards: list.cards.filter((card) => card.id !== listCard.id),
     }));
   }
+
+  dropCard(event: CdkDragDrop<InfoCard[]>) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
+    } else {
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
+    }
+  }
+  // dropList(event: CdkDragDrop<InfoList[]>) {
+  //   if (event.previousContainer === event.container) {
+  //     moveItemInArray(
+  //       event.container.data,
+  //       event.previousIndex,
+  //       event.currentIndex
+  //     );
+  //   } else {
+  //     transferArrayItem(
+  //       event.previousContainer.data,
+  //       event.container.data,
+  //       event.previousIndex,
+  //       event.currentIndex
+  //     );
+  //   }
+  // }
 }

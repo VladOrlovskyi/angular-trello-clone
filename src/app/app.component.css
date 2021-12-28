@@ -17,29 +17,39 @@ h1 {
 
 .section-list-card {
   width: 300px;
-  height: 200px;
+  padding: 10px;
   background-color: cadetblue;
   border: 1px solid black;
 }
 
 .section-form {
   width: 300px;
-  height: 200px;
+  padding: 10px;
   background-color: azure;
   border: 1px solid black;
 }
 
 .section-form-input {
   width: 250px;
+  margin: 5px 0;
+}
+.section-list-card-area {
+  border: solid 1px #ccc;
+  min-height: 60px;
+  background: white;
+  border-radius: 4px;
+  overflow: hidden;
+  display: block;
 }
 
 .section-list-card-item {
-  width: 200px;
+  margin: 5px 0;
   background-color: aqua;
+  border: 1px solid black;
 }
 
 .section-form-card {
-  width: 250px;
+  margin: 5px 0;
   background-color: beige;
   border: 1px solid black;
 }

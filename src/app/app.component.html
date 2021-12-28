@@ -4,20 +4,27 @@
   </div>
 </header>
 <section class="section-list">
-  <div class="section-list-card" *ngFor="let list of lists">
-    {{list.title}}
-    <div class="section-list-card-item" *ngFor="let listCard of list.cards">
-      {{listCard.title}}
-      <button (click)="deleteCard(listCard)">Delete Card</button>
+  <div cdkDropListGroup>
+    <!-- <div cdkDropList class="section-list-card-area" [cdkDropListData]="lists" (cdkDropListDropped)="dropList($event)"> -->
+    <!-- <div class="section-list-card" *ngFor="let list of lists" cdkDrag> -->
+    <div class="section-list-card" *ngFor="let list of lists">
+      {{list.title}}
+      <div cdkDropList class="section-list-card-area" [cdkDropListData]="list.cards"
+        (cdkDropListDropped)="dropCard($event)">
+        <div class="section-list-card-item" *ngFor="let listCard of list.cards" cdkDrag>
+          {{listCard.title}}
+          <button (click)="deleteCard(listCard)">Delete Card</button>
+        </div>
+      </div>
+      <form action="submit" class="section-form-card">
+        <input #cardTitle type="text" class="section-form-input-card" name="nameTitleCard">
+        <button (click)="addCard(list, cardTitle.value)">Add Card</button>
+      </form>
+      <button (click)="deleteList(list)">Delete List</button>
     </div>
-    <form action="submit" class="section-form-card">
-      <input #cardTitle type="text" class="section-form-input-card" name="nameTitleCard">
-      <button (click)="addCard(list, cardTitle.value)">Add Card</button>
+    <form action="submit" class="section-form">
+      <input #listTitle type="text" class="section-form-input" name="nameTitleList">
+      <button (click)="addList(listTitle.value)">Add List</button>
     </form>
-    <button (click)="deleteList(list)">Delete List</button>
   </div>
-  <form action="submit" class="section-form">
-    <input #listTitle type="text" class="section-form-input" name="nameTitleList">
-    <button (click)="addList(listTitle.value)">Add List</button>
-  </form>
 </section>
