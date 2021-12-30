@@ -1,0 +1,43 @@
+
+.section-list-card {
+  width: 300px;
+  padding: 10px;
+  background-color: cadetblue;
+  border: 1px solid black;
+}
+
+.section-form {
+  width: 300px;
+  padding: 10px;
+  background-color: azure;
+  border: 1px solid black;
+}
+
+.section-form-input {
+  width: 250px;
+  margin: 5px 0;
+}
+.section-list-card-area {
+  border: solid 1px #ccc;
+  min-height: 60px;
+  background: white;
+  border-radius: 4px;
+  overflow: hidden;
+  display: block;
+}
+
+.section-list-card-item {
+  margin: 5px 0;
+  background-color: aqua;
+  border: 1px solid black;
+}
+
+.section-form-card {
+  margin: 5px 0;
+  background-color: beige;
+  border: 1px solid black;
+}
+
+.section-form-input-card {
+  width: 200px;
+}

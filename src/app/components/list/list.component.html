@@ -1,0 +1,15 @@
+<div class="section-list-card" cdkDrag>
+    {{list.title}}
+    <div cdkDropList class="section-list-card-area" #cardList="cdkDropList" [cdkDropListData]="list.cards"
+        [cdkDropListConnectedTo]="cardList" (cdkDropListDropped)="dropCard($event)">
+        <div class="section-list-card-item" *ngFor="let listCard of list.cards" cdkDrag>
+            {{listCard.title}}
+            <button (click)="deleteCard(listCard)">Delete Card</button>
+        </div>
+    </div>
+    <form action="submit" class="section-form-card">
+        <input #cardTitle type="text" class="section-form-input-card" name="nameTitleCard">
+        <button (click)="addCard(list, cardTitle.value)">Add Card</button>
+    </form>
+    <button (click)="deleteList(list)">Delete List</button>
+</div>
